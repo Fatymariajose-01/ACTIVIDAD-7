@@ -4,7 +4,13 @@ public class Program
     private static List<int> numeros = new List<int>();
     static void Main()
     {
+        try { 
         MostrarMenu();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Algo ocurrió :/ detalles: {ex.Message}");           
+        }
     }
 
     // Método para mostrar el menú
@@ -20,7 +26,9 @@ public class Program
         Console.WriteLine("6. Salir");
 
         Console.Write("\nSeleccione una opción: ");
-        int opcion = int.Parse(Console.ReadLine());
+        try
+        {
+            int opcion = int.Parse(Console.ReadLine());
 
         switch (opcion)
         {
@@ -56,9 +64,18 @@ public class Program
 
         MostrarMenu();
     }
+        catch (FormatException)
+        {
+            Console.WriteLine("Error: Ingrese un número válido.");
+            Console.ReadKey();
+        }
+    }
 
     static void PedirNumeros()
     {
+        try
+        {
+
         Console.Write("Ingrese la cantidad de números a ingresar: ");
         int n = int.Parse(Console.ReadLine());
 
@@ -72,6 +89,12 @@ public class Program
         }
 
         Console.WriteLine("Números ingresados correctamente.");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Error: Ingrese un número válido para la cantidad de números.");
+           Console.ReadKey();
+        }
     }
     public static void CalcularYMostrarMedia()
     {
@@ -90,18 +113,26 @@ public class Program
     }
     public static double CalcularMediana()
     {
-        List<int> numerosOrdenados = numeros.OrderBy(num => num).ToList();
-        int n = numerosOrdenados.Count;
+        try
+        {
+            List<int> numerosOrdenados = numeros.OrderBy(num => num).ToList();
+            int n = numerosOrdenados.Count;
 
-        if (n % 2 == 0)
-        {
-            int medio1 = numerosOrdenados[n / 2 - 1];
-            int medio2 = numerosOrdenados[n / 2];
-            return (medio1 + medio2) / 2.0;
+            if (n % 2 == 0)
+            {
+                int medio1 = numerosOrdenados[n / 2 - 1];
+                int medio2 = numerosOrdenados[n / 2];
+                return (medio1 + medio2) / 2.0;
+            }
+            else
+            {
+                return numerosOrdenados[n / 2];
+            }
         }
-        else
+        catch (ArgumentOutOfRangeException)
         {
-            return numerosOrdenados[n / 2];
+            Console.WriteLine("Error: No hay suficientes números ingresados para calcular la mediana.");
+            return 0;
         }
     }
     public static double CalcularDesviacionEstandar()
