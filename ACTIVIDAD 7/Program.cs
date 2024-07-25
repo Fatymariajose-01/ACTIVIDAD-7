@@ -2,7 +2,7 @@
 public class Program
 {
     private static List<int> numeros = new List<int>();
-    static void EnseñarMenu()
+    static void Main()
     {
         MostrarMenu();
     }
@@ -10,12 +10,14 @@ public class Program
     // Método para mostrar el menú
     static void MostrarMenu()
     {
-        Console.WriteLine("Calculadora de estadísticas básicas");
+        Console.Clear();
+        Console.WriteLine("Calculadora de operaciones estadísticas básicas");
         Console.WriteLine("1. Ingresar números");
         Console.WriteLine("2. Calcular y mostrar media");
         Console.WriteLine("3. Calcular y mostrar mediana");
-        Console.WriteLine("4. Calcular y mostrar desviación estándar");
-        Console.WriteLine("5. Salir");
+        Console.WriteLine("4. Calcular y mostrar la moda");
+        Console.WriteLine("5. Calcular y mostrar desviación estándar");
+        Console.WriteLine("6. Salir");
 
         Console.Write("\nSeleccione una opción: ");
         int opcion = int.Parse(Console.ReadLine());
@@ -24,22 +26,31 @@ public class Program
         {
             case 1:
                 PedirNumeros();
+                Console.ReadKey();
                 break;
             case 2:
                 CalcularYMostrarMedia();
+                Console.ReadKey();
                 break;
             case 3:
                 CalcularYMostrarMediana();
+                Console.ReadKey();
                 break;
             case 4:
-                CalcularYMostrarDesviacionEstandar();
+                CalcularYMostrarModa();
+                Console.ReadKey();
                 break;
             case 5:
+                CalcularYMostrarDesviacionEstandar();
+                Console.ReadKey();
+                break;
+            case 6:
                 Console.WriteLine("¡Hasta luego!");
                 Environment.Exit(0);
                 break;
             default:
                 Console.WriteLine("Opción no válida. Por favor, seleccione una opción del menú.");
+                Console.ReadKey();
                 break;
         }
 
@@ -112,4 +123,40 @@ public class Program
         double desviacionEstandar = CalcularDesviacionEstandar();
         Console.WriteLine($"La desviación estándar de los números ingresados es: {desviacionEstandar}");
     }
+    public static void CalcularYMostrarModa()
+    {
+        if (numeros.Count == 0)
+        {
+            Console.WriteLine("No hay números ingresados. Por favor, ingrese números primero.");
+            return;
+        }
+
+        List<int> moda = CalcularModa();
+
+        if (moda.Count == 1)
+        {
+            Console.WriteLine($"La moda de los números ingresados es: {moda[0]}");
+        }
+        else
+        {
+            Console.WriteLine("Las modas de los números ingresados son:");
+            foreach (var item in moda)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+    public static List<int> CalcularModa()
+    {
+        var conteoNumeros = numeros.GroupBy(x => x)
+                                   .OrderByDescending(g => g.Count())
+                                   .Select(g => new { Numero = g.Key, Frecuencia = g.Count() });
+
+        int maxFrecuencia = conteoNumeros.First().Frecuencia;
+
+        return conteoNumeros.Where(x => x.Frecuencia == maxFrecuencia)
+                            .Select(x => x.Numero)
+                            .ToList();
+    }
+
 }
