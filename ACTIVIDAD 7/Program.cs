@@ -24,10 +24,10 @@ public class Program
         switch (opcion)
         {
             case 1:
-                //PedirNumeros();
+                PedirNumeros();
                 break;
             case 2:
-                //CalcularYMostrarMedia();
+                CalcularYMostrarMedia();
                 break;
             case 3:
                 //CalcularYMostrarMediana();
@@ -66,4 +66,14 @@ public class Program
 
         Console.WriteLine("Números ingresados correctamente.");
     }
+    public static void CalcularYMostrarMedia()
+    {
+
+        double media = CalcularMedia();
+        Console.WriteLine($"La media de los números ingresados es: {media}");
+    }
+        public static double CalcularMedia()
+        {
+            return numeros.Average();
+        }
 }
