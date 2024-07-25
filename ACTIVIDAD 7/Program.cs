@@ -45,7 +45,7 @@ public class Program
                 Console.ReadKey();
                 break;
             case 6:
-                Console.WriteLine("¡Hasta luego!");
+                Console.WriteLine("Adiós :)!");
                 Environment.Exit(0);
                 break;
             default:
