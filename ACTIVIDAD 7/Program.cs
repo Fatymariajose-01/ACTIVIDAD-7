@@ -30,7 +30,7 @@ public class Program
                 CalcularYMostrarMedia();
                 break;
             case 3:
-                //CalcularYMostrarMediana();
+                CalcularYMostrarMediana();
                 break;
             case 4:
                 //CalcularYMostrarDesviacionEstandar();
@@ -76,4 +76,26 @@ public class Program
         {
             return numeros.Average();
         }
+    public static void CalcularYMostrarMediana()
+    {
+        double mediana = CalcularMediana();
+        Console.WriteLine($"La mediana de los números ingresados es: {mediana}");
+    }
+    public static double CalcularMediana()
+    {
+        List<int> numerosOrdenados = numeros.OrderBy(num => num).ToList();
+        int n = numerosOrdenados.Count;
+
+        if (n % 2 == 0)
+        {
+            int medio1 = numerosOrdenados[n / 2 - 1];
+            int medio2 = numerosOrdenados[n / 2];
+            return (medio1 + medio2) / 2.0;
+        }
+        else
+        {
+            return numerosOrdenados[n / 2];
+        }
+    }
+
 }
