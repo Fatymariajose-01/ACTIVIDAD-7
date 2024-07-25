@@ -15,8 +15,7 @@ public class Program
         Console.WriteLine("2. Calcular y mostrar media");
         Console.WriteLine("3. Calcular y mostrar mediana");
         Console.WriteLine("4. Calcular y mostrar desviación estándar");
-        Console.WriteLine("5. Mostrar números ingresados");
-        Console.WriteLine("6. Salir");
+        Console.WriteLine("5. Salir");
 
         Console.Write("\nSeleccione una opción: ");
         int opcion = int.Parse(Console.ReadLine());
@@ -33,12 +32,9 @@ public class Program
                 CalcularYMostrarMediana();
                 break;
             case 4:
-                //CalcularYMostrarDesviacionEstandar();
+                CalcularYMostrarDesviacionEstandar();
                 break;
             case 5:
-                //MostrarNumerosIngresados();
-                break;
-            case 6:
                 Console.WriteLine("¡Hasta luego!");
                 Environment.Exit(0);
                 break;
@@ -97,5 +93,23 @@ public class Program
             return numerosOrdenados[n / 2];
         }
     }
+    public static double CalcularDesviacionEstandar()
+    {
+        double media = CalcularMedia();
+        double sumatoriaCuadrados = numeros.Sum(num => Math.Pow(num - media, 2));
+        double desviacionEstandar = Math.Sqrt(sumatoriaCuadrados / numeros.Count);
 
+        return desviacionEstandar;
+    }
+    public static void CalcularYMostrarDesviacionEstandar()
+    {
+        if (numeros.Count == 0)
+        {
+            Console.WriteLine("No hay números ingresados. Por favor, ingrese números primero.");
+            return;
+        }
+
+        double desviacionEstandar = CalcularDesviacionEstandar();
+        Console.WriteLine($"La desviación estándar de los números ingresados es: {desviacionEstandar}");
+    }
 }
